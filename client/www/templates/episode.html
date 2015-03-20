@@ -1,0 +1,29 @@
+<ion-view title="Episode">
+    <ion-content class="has-header">
+        <div class="list card">
+            <div class="item">
+                <h3>{{episode.published_at}}</h3>
+                <h2>{{episode.title}}</h2>
+                <p ng-bind-html-unsafe="{{episode.description}}"></p>
+            </div>
+            <div class="item item-body">
+              <p>{{episode.description}}</p>
+	      <audio src="{{episode.public_url}}"> </audio>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item">
+                    <i class="icon ion-thumbsup"></i>
+                    Like
+                </a>
+                <a class="tab-item">
+                    <i class="icon ion-chatbox"></i>
+                    Comment
+                </a>
+                <a class="tab-item">
+                    <i class="icon ion-share"></i>
+                    Share
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
