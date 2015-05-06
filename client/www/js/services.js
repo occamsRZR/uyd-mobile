@@ -9,7 +9,8 @@ angular.module('starter.services', ['ngResource'])
 		    }
 		},
 		query: {
-		    method: 'GET'
+		    method: 'GET',
+		    params: {page: 5}
 		}
 	    });
     });

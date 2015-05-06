@@ -35,8 +35,26 @@ angular.module('starter.controllers', ['starter.services'])
     .controller('EpisodesCtrl', function($scope, Episode) {
 	$scope.episodes = Episode.query();
     })
-
-    .controller('EpisodeCtrl', function($scope, $stateParams, Episode) {
+    .controller('EpisodeCtrl', function($scope, $stateParams, Episode, $ionicLoading) {
 	$scope.episode = Episode.get({episodeSlug: $stateParams.episodeSlug});
 	console.log($scope.episode);
+	
+	$scope.play = function(src) {
+	    if($scope.audio === undefined) {
+		$scope.audio = new Audio($scope.episode.public_url);
+	    }
+	    $scope.audio.play();
+	}
+
+	$scope.pause = function () {
+	    $scope.audio.pause();
+	}
+	
+	var mediaStatusCallback = function(status) {
+            if(status == 1) {
+		$ionicLoading.show({template: 'Loading...'});
+            } else {
+		$ionicLoading.hide();
+            }
+	}
     });

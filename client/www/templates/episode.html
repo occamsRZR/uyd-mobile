@@ -5,10 +5,16 @@
                 <h3>{{episode.published_at}}</h3>
                 <h2>{{episode.title}}</h2>
                 <p ng-bind-html-unsafe="{{episode.description}}"></p>
+
+
             </div>
+	    <div class='playback-controls'>
+	      <button class="button" ng-click="play('{{episode.public_url}}')" data-episode-url="{{episode.public_url}}">Play</button>
+	      <button class="button" ng-click="pause()">Pause</button>
+	    </div>
+    
             <div class="item item-body">
               <p>{{episode.description}}</p>
-	      <audio src="{{episode.public_url}}"> </audio>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
                 <a class="tab-item">
