@@ -10,7 +10,7 @@ angular.module('starter.services', ['ngResource'])
 		},
 		query: {
 		    method: 'GET',
-		    params: {page: 5}
+		    params: {page: 1, by_direction: 'desc'}
 		}
 	    });
     });

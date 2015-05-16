@@ -4,8 +4,9 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
       <ion-list>
-          <ion-item ng-repeat="episode in episodes.episodes" 
+          <ion-item ng-repeat="episode in episodes" 
                     href="#/app/episode/{{episode.slug}}">{{episode.title}}</ion-item>
       </ion-list>
+      <ion-infinite-scroll on-infinite="nextPage()" ng-if="!noMoreItemsAvailable"></ion-infinite-scroll>
   </ion-content>
 </ion-view>

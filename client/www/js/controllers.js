@@ -32,13 +32,55 @@ angular.module('starter.controllers', ['starter.services'])
     }, 1000);
   };
 })
+.controller('HomeCtrl',
+		["$sce", function ($sce) {
+			this.config = {
+				sources: [
+					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.mp4"), type: "video/mp4"},
+					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"), type: "video/webm"},
+					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.ogg"), type: "video/ogg"}
+				],
+				tracks: [
+					{
+						src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
+						kind: "subtitles",
+						srclang: "en",
+						label: "English",
+						default: ""
+					}
+				],
+				theme: "bower_components/videogular-themes-default/videogular.css",
+				plugins: {
+					poster: "http://www.videogular.com/assets/images/videogular.png"
+				}
+			};
+		}]
+	)
     .controller('EpisodesCtrl', function($scope, Episode) {
-	$scope.episodes = Episode.query();
+	$scope.page = 1;
+	$scope.nextPage = function() {
+	    if($scope.page === 5) {
+		$scope.noMoreItemsAvailable = true;
+	    }
+	    episodeQuery = Episode.query({page: $scope.page});
+	    episodeQuery.$promise.then(function (result){
+		if ($scope.episodes === undefined) {
+		    $scope.episodes = result.episodes;
+		}
+		else {
+		    $scope.episodes.push.apply($scope.episodes, result.episodes);
+		}
+		$scope.$broadcast('scroll.infiniteScrollComplete');
+		$scope.page += 1;
+	    });
+	};
     })
-    .controller('EpisodeCtrl', function($scope, $stateParams, Episode, $ionicLoading) {
+    .controller('EpisodeCtrl', function($scope, $stateParams, Episode, $ionicLoading, $sce) {
 	$scope.episode = Episode.get({episodeSlug: $stateParams.episodeSlug});
-	console.log($scope.episode);
-	
+	$scope.episode.$promise.then(function (result) {
+	    $scope.episodeDescription = $sce.trustAsHtml($scope.episode.description);
+	});
+
 	$scope.play = function(src) {
 	    if($scope.audio === undefined) {
 		$scope.audio = new Audio($scope.episode.public_url);

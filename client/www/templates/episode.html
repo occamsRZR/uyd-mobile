@@ -1,4 +1,4 @@
-<ion-view title="Episode">
+<ion-view title="Episode {{episode.number}}">
     <ion-content class="has-header">
         <div class="list card">
             <div class="item">
@@ -14,7 +14,7 @@
 	    </div>
     
             <div class="item item-body">
-              <p>{{episode.description}}</p>
+	      <span ng-bind-html="episodeDescription"></span>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
                 <a class="tab-item">
